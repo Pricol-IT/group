@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pricol Holdings | Excellence in Motion</title>
+
+    <link rel="stylesheet" href="css/fog.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <!-- <link rel="preconnect" href="https://cdnjs.cloudflare.com"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <main id="smooth-wrapper ">
+        <div id="smooth-content">
+            <!-- Background Layer System -->
+            <div id="background-container">
+                <canvas id="canvas-limited" class="bg-layer"></canvas>
+                <img id="bg-precision" class="bg-layer" src="images/bg-limited.jpg" alt="Pricol Precision" />
+                <canvas id="canvas-engineering" class="bg-layer"></canvas>
+                <canvas id="canvas-logistics" class="bg-layer"></canvas>
+                <canvas id="canvas-travel" class="bg-layer"></canvas>
+                <canvas id="canvas-gourmet" class="bg-layer"></canvas>
+                <img id="bg-retreats" class="bg-layer" src="images/bg-retreats.jpg" alt="Pricol Retreats" />
+
+                <!-- Atmospheric Fog Layers -->
+            </div>
+
+            <!-- Atmospheric Fog Layers (Moved Overlay) -->
+            <div class="fog-container">
+                <div class="parallax-layer" data-speed="0.1">
+                    <div class="fog-layer"
+                        style="background-image: url('images/smoke-background.jpg'); animation: continuousDrift 60s linear infinite; opacity: 0.08;">
+                    </div>
+                </div>
+                <div class="parallax-layer" data-speed="0.2">
+                    <div class="fog-layer"
+                        style="background-image: url('images/smoke-background.jpg'); animation: continuousDriftReverse 50s linear infinite; opacity: 0.06;">
+                    </div>
+                </div>
+                <div class="parallax-layer" data-speed="0.3">
+                    <div class="fog-layer"
+                        style="background-image: url('images/smoke-background.jpg'); animation: continuousDrift 60s linear infinite; opacity: 0.05;">
+                    </div>
+                </div>
+                <div class="parallax-layer" data-speed="0.4">
+                    <div class="fog-layer"
+                        style="background-image: url('images/smoke-background.jpg'); animation: continuousDriftReverse 40s linear infinite; opacity: 0.04;">
+                    </div>
+                </div>
+                <div class="parallax-layer" data-speed="0.5">
+                    <div class="fog-layer"
+                        style="background-image: url('images/smoke-background.jpg'); animation: continuousDrift 30s linear infinite; opacity: 0.03;">
+                    </div>
+                </div>
+            </div>
+            <div class="light-rays"></div>
+
+            <!-- HERO SECTION -->
+            <section class="section hero">
+                <!-- Mist Background Layers (Realistic Floating Effect) -->
+                <div class="hero-mist-bg fog-float-slow"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('images/fog-texture-new.png'); background-size: cover; background-position: center; z-index: -1; opacity: 0.6;">
+                </div>
+                <div class="hero-mist-bg fog-float-fast"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('images/fog-texture-new.png'); background-size: cover; background-position: center; z-index: -1; opacity: 0.4; transform: scale(1.2);">
+                </div>
+
+                <!-- Video Layer (Base) - Continuous with Mountains -->
+                <canvas id="intro-canvas" class="intro-video-layer"></canvas>
+
+                <!-- Cloud Reveal Layer -->
+                <div class="cloud-reveal-layer"></div>
+
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="hero-content d-flex flex-column justify-content-center align-items-center">
+                                <div class="hero-brand text-center">
+                                    <h1 class="text-center text-title">WELCOME TO</h1>
+                                    <div class="logo">
+                                        <img src="images/logo-img.png" alt="Pricol Logo">
+                                    </div>
+                                </div>
+
+                                <div class="hero-about text-center" style="opacity: 0; margin-top: 2rem;">
+                                    <p class="desc">
+                                        Established in 1975, Pricol Holdings is a leading business conglomerate
+                                        Headquartered in Coimbatore, India. Pricol commenced its operations in the field
+                                        of
+                                        Automotive Instruments and today is a leading player in the fields of Automotive
+                                        Components & Solutions, Engineering, Hospitality, Corporate & Leisure Travel,
+                                        Cargo,
+                                        and Realty.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scroll-indicator">
+                    <span>Scroll to Explore</span>
+                    <div class="line"></div>
+                </div>
+
+
+
+
+            </section>
+
+            <!-- THREE.JS CLOUD TUNNEL SECTION -->
+            <div id="cloud-tunnel-section" style="height: 100vh; position: relative; z-index: 20;">
+                <canvas id="cloud-tunnel-canvas"></canvas>
+            </div>
+
+            <!-- Content Overlay-->
+            <!-- 1. Limited -->
+            <section id="c1" class="section company left" data-index="1">
+                <div class="container">
+                    <div class="content">
+                        <h3>Pricol Limited</h3>
+                        <p>Pioneering automotive excellence with advanced driver information systems, sensors, and
+                            connected vehicle solutions for global markets.</p>
+                        <a href="https://pricol.com/" target="_blank" class="visit-link">Visit Website →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. Precision -->
+            <section id="c2" class="section company right" data-index="2">
+                <div class="container">
+                    <div class="content">
+                        <h3>Precision Engineering</h3>
+                        <p>High-precision components and sub-assemblies for automotive, aerospace, and industrial
+                            applications.</p>
+                        <a href="#" class="visit-link">Visit Website →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Engineering -->
+            <section id="c3" class="section company left" data-index="3">
+                <div class="container">
+                    <div class="content">
+                        <h3>Engineering Industries</h3>
+                        <p>Delivering robust heavy engineering solutions, custom fabrication, and large-scale
+                            manufacturing for global infrastructure projects.</p>
+                        <a href="https://www.pricolengineering.com/" target="_blank" class="visit-link">Visit
+                            Website
+                            →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Logistics -->
+            <section id="c4" class="section company right" data-index="4">
+                <div class="container">
+                    <div class="content">
+                        <h3>Pricol Logistics</h3>
+                        <p>End-to-end supply chain optimization, freight forwarding, and integrated logistics
+                            services
+                            connecting businesses across borders.</p>
+                        <a href="https://pricollogistics.com/" target="_blank" class="visit-link">Visit
+                            Website
+                            →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. Travel -->
+            <section id="c5" class="section company left" data-index="5">
+                <div class="container">
+                    <div class="content">
+                        <h3>Pricol Travel</h3>
+                        <p>Curating bespoke corporate and leisure travel experiences with a focus on luxury, efficiency,
+                            and seamless itinerary management.</p>
+                        <a href="https://pricoltravel.com/" target="_blank" class="visit-link">Visit Website
+                            →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Gourmet -->
+            <section id="c6" class="section company right" data-index="6">
+                <div class="container">
+                    <div class="content">
+                        <h3>Pricol Gourmet</h3>
+                        <p>Redefining the culinary landscape with premium hospitality, fine dining, and gourmet food
+                            services that delight the senses.</p>
+                        <a href="https://www.pricolgourmet.com/" target="_blank" class="visit-link">Visit
+                            Website
+                            →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. Retreats -->
+            <section id="c7" class="section company left" data-index="7">
+                <div class="container">
+                    <div class="content">
+                        <h3>Pricol Retreats</h3>
+                        <p>Exclusive luxury heritage retreats offering serenity, cultural immersion, and world-class
+                            hospitality in nature's lap.</p>
+                        <a href="https://dvara.in/" target="_blank" class="visit-link">Visit Website →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <section class="footer">
+                <div class="container centered">
+                    <h2>Pricol Holdings</h2>
+                    <div class="footer-contact">
+                        <div class="contact-item">
+                            <svg class="icon-pin" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"
+                                    fill="currentColor" />
+                            </svg>
+                            <span>CPM TOWERS, 109, RACE COURSE, COIMBATORE - 641018, INDIA</span>
+                        </div>
+                        <div class="contact-item">
+                            <svg class="icon-phone" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.69 14.9 16.08 14.82 16.43 14.93C17.55 15.3 18.76 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z"
+                                    fill="currentColor" />
+                            </svg>
+                            <span>0422 433 2700</span>
+                        </div>
+                    </div>
+                    <p class="copyright">© 2025 Pricol Holdings. All rights reserved.</p>
+                </div>
+            </section>
+
+            <!-- SVG Filter for Image Sharpening (Unsharp Mask) -->
+            <svg width="0" height="0" style="position: absolute; pointer-events: none;">
+                <defs>
+                    <filter id="sharpen-view">
+                        <!-- Blur the source image -->
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur" />
+                        <!-- Subtract blur from original to enhance edges (Unsharp Mask) -->
+                        <feComposite in="SourceGraphic" in2="blur" operator="arithmetic" k1="0" k2="2" k3="-1" k4="0" />
+                    </filter>
+                </defs>
+            </svg>
+        </div>
+    </main>
+
+
+    <canvas id="webgl" class="webgl"></canvas>
+
+    <div id="loader">
+        <div class="loader-text">PRICOL HOLDINGS</div>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+    </div>
+
+    <!-- Scroll Content -->
+
+
+
+
+    <!-- Main Scripts -->
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="js/threeScene.js"></script>
+<script src="js/three-cloud-tunnel.js"></script>
+<script src="js/main.js"></script>
+
+</html>
