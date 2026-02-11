@@ -4,6 +4,37 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.registerPlugin(ScrollTrigger);
     }
 
+    // --- LENIS SMOOTH SCROLL SETUP ---
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+    });
+
+    // Get ScrollTrigger to update on Lenis scroll
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Add Lenis's ticker to GSAP's ticker for smoothness
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+    });
+
+    // Disable GSAP's lag smoothing to prevent stutter causing jumps
+    gsap.ticker.lagSmoothing(0);
+
+    /* 
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+    */
+
     const threeApp = new ThreeScene();
 
     // Loader
@@ -182,7 +213,117 @@ function initScrollInteraction(threeApp) {
         }
     });
 
-    // Parallax & Opening Effect (Cinematic "Video-Like" Rotation)
+    // --- FOG SEQUENCE SECTION (User Provided) ---
+    const fogCanvas = document.getElementById('fog-sequence-canvas');
+    const fogFrames = [];
+    const fogImagesCtx = { currentFrame: 0 };
+
+    // Explicit list based on user request (0 to 7 second marks approx)
+    const fogFileList = [
+        "frame_0_00_0f.jpeg",
+        "frame_0_00_9f.jpeg",
+        "frame_0_01_1f.jpeg",
+        "frame_0_01_7f.jpeg",
+        "frame_0_01_18f.jpeg",
+        "frame_0_02_3f.jpeg",
+        "frame_0_02_20f.jpeg",
+        "frame_0_03_2f.jpeg",
+        "frame_0_03_9f.jpeg",
+        "frame_0_03_19f.jpeg",
+        "frame_0_04_11f.jpeg",
+        "frame_0_04_22f.jpeg",
+        "frame_0_05_3f.jpeg",
+        "frame_0_05_9f.jpeg",
+        "frame_0_05_15f.jpeg",
+        "frame_0_05_21f.jpeg",
+        "frame_0_06_3f.jpeg",
+        "frame_0_06_6f.jpeg",
+        "frame_0_06_12f.jpeg",
+        "frame_0_06_15f.jpeg",
+        "frame_0_06_21f.jpeg",
+        "frame_0_07_3f.jpeg",
+        "frame_0_07_7f.jpeg",
+        "frame_0_07_12f.jpeg",
+        "frame_0_07_15f.jpeg",
+        "frame_0_07_19f.jpeg"
+    ];
+
+    // Preload with cache buster to satisfy "images not updated" report
+    const cacheBuster = new Date().getTime();
+    fogFileList.forEach(file => {
+        const img = new Image();
+        img.src = `images/fog/${file}?v=${cacheBuster}`;
+        fogFrames.push(img);
+    });
+
+    function renderFogFrame() {
+        if (!fogCanvas) return;
+        const ctx = fogCanvas.getContext('2d');
+        const index = Math.min(Math.max(Math.round(fogImagesCtx.currentFrame), 0), fogFrames.length - 1);
+        const img = fogFrames[index];
+
+        if (img && img.complete) {
+            const canvasWidth = fogCanvas.width;
+            const canvasHeight = fogCanvas.height;
+
+            // Cover logic
+            const scale = Math.max(canvasWidth / img.width, canvasHeight / img.height) * 1.05;
+            const x = (canvasWidth / 2) - (img.width / 2) * scale;
+            const y = (canvasHeight / 2) - (img.height / 2) * scale;
+
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        }
+    }
+
+    function resizeFogCanvas() {
+        if (fogCanvas) {
+            fogCanvas.width = window.innerWidth;
+            fogCanvas.height = window.innerHeight;
+            renderFogFrame();
+        }
+    }
+
+    if (fogCanvas) {
+        // Initial render: Start from last frame as requested
+        const startImgIndex = fogFrames.length - 1;
+        fogImagesCtx.currentFrame = startImgIndex;
+
+        window.addEventListener('resize', resizeFogCanvas);
+        resizeFogCanvas();
+
+        const checkLoad = setInterval(() => {
+            const img = fogFrames[startImgIndex];
+            if (img && img.complete) {
+                renderFogFrame();
+                clearInterval(checkLoad);
+            }
+        }, 100);
+    }
+
+    // SCROLL ANIMATION FOR FOG
+    // Fade out canvas at the end to reveal content
+    // fogTl.to(fogCanvas, { ... }) - REMOVED
+
+    // FOG SEQUENCE INTEGRATION (Into RevealTl)
+    // 1. Fade In Fog Canvas (Covering the video)
+    revealTl.to('.fog-sequence-section', { opacity: 0.6, duration: 0.5 }, 0.6);
+
+    // 2. Play Fog Frames (0.6 to 1.0)
+    revealTl.fromTo(fogImagesCtx,
+        { currentFrame: fogFileList.length - 1 },
+        {
+            currentFrame: 0,
+            snap: "currentFrame",
+            ease: "none",
+            onUpdate: renderFogFrame,
+            duration: 0.4
+        },
+        0.6
+    );
+
+    // 3. Fade Out Fog to Reveal Next Section (Pricol Limited)
+    revealTl.to('.fog-sequence-section', { opacity: 0.4, duration: 0.2 }, 0.9);
 
     // --- CLOUD DIVIDER SECTION (Mont-Fort Style) ---
     // 1. Mist Fades IN over Hero
@@ -260,6 +401,17 @@ function initScrollInteraction(threeApp) {
     // Canvas Reveal (renamed from Video)
     revealTl.from('#intro-canvas', { scale: 1.1, ease: 'none' }, 0);
 
+    // SKY FOG OVERLAY (Coming from sky)
+    revealTl.fromTo('.sky-fog-overlay',
+        { autoAlpha: 0, y: '-20%' },
+        { autoAlpha: 1, y: '0%', duration: 0.4, ease: 'power1.out' },
+        0.3 // Start mid-way through building scroll
+    );
+    revealTl.to('.sky-fog-overlay',
+        { autoAlpha: 0, duration: 0.2, ease: 'power1.in' },
+        0.7 // Fade out as main fog takes over
+    );
+
     // Animate Frames (Backwards 8s -> 0s)
     revealTl.to(introImagesCtx, {
         currentFrame: 0,
@@ -268,14 +420,21 @@ function initScrollInteraction(threeApp) {
         onUpdate: renderIntroFrame
     }, 0);
 
-    // ZOOM INTO PRICOL LIMITED (Transition)
-    // Scale up dramatically at the end of the hero scroll
+    // ZOOM INTO PRICOL LIMITED (Transition) - REMOVED
+    // revealTl.to('#intro-canvas', { scale: 5, ... });
+
+    // ZOOM into Mist (Sudden) - REMOVED
+    // revealTl.to('#intro-canvas', { scale: 15, ... });
+
+    // Instead, just ensure it fades out if not covered by fog, or let fog cover it.
+    // The fog covers it at 0.6.
+    // So we might not need to do anything else for the canvas here.
+    // But let's check if opacity needs to go to 0.
     revealTl.to('#intro-canvas', {
-        scale: 5,
         opacity: 0,
-        ease: 'power2.in',
-        duration: 0.25
-    }, 0.75); // Start scaling near the end of the frame sequence
+        duration: 0.5,
+        ease: 'power1.inOut'
+    }, 0.7); // Fade out naturally behind fog
 
 
 
@@ -305,14 +464,8 @@ function initScrollInteraction(threeApp) {
         duration: 0.1
     }, 0.7); // Fade out BEFORE the zoom/mist (at 0.7)
 
-    // ZOOM into Mist (Sudden)
-    // Scale starts later and is faster
-    revealTl.to('#intro-canvas', {
-        scale: 15, // Huge scale for "flying in"
-        opacity: 0,
-        ease: 'expo.in', // Sudden acceleration
-        duration: 0.2
-    }, 0.8); // Starts late, ends at 1.0 (Mist Reveal)
+    // ZOOM into Mist (Sudden) - REMOVED
+    // revealTl.to('#intro-canvas', { scale: 15, ... });
 
     const heroTl = gsap.timeline();
 
@@ -920,6 +1073,17 @@ function initAtmosphericEffects() {
 
                 layer.style.setProperty('--mouse-x', `${x}px`);
                 layer.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    }
+
+    // Back to Top Button Logic
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    if (scrollTopBtn) {
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         });
     }

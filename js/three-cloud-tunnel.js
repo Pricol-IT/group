@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const cloudParticles = [];
     const loader = new THREE.TextureLoader();
 
-    // Load ONLY the requested texture: fog-texture-new.jpg
+    // Load ONLY the requested texture: smoke-background.jpg
     // "use this foggy effect alone"
-    loader.load('images/fog-texture-new.jpg', function (texture) {
+    loader.load('images/smoke-background.jpg', function (texture) {
         const cloudGeo = new THREE.PlaneGeometry(500, 500);
 
         // Single material with motion emphasis
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             transparent: true,
             opacity: 0.55, // Stronger visibility
             depthWrite: false,
-            blending: THREE.AdditiveBlending
+            blending: THREE.NormalBlending
         });
 
         // Loop to create cloud tunnel

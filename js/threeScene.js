@@ -60,9 +60,9 @@ class ThreeScene {
 
     createScene() {
         this.scene = new THREE.Scene();
-        // Light Blue Fog to blend with clouds
-        this.scene.background = new THREE.Color(0xe0f2f1);
-        this.scene.fog = new THREE.FogExp2(0xe0f2f1, 0.015);
+        // Dark Blue Fog to blend with clouds (Match site theme)
+        this.scene.background = new THREE.Color(0x002250);
+        this.scene.fog = new THREE.FogExp2(0x002250, 0.015);
     }
 
     createCamera() {
