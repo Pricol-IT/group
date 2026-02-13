@@ -274,7 +274,7 @@ body {
 }
 
 .loader-text {
-    font-weight: 800;
+    
     letter-spacing: 0.1em;
     font-size: 1.5rem;
     color: var(--pricol-blue);
