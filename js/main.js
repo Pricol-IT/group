@@ -1032,7 +1032,7 @@ function initScrollInteraction(threeApp) {
                 ScrollTrigger.create({
                     trigger: nextSection,
                     start: "top bottom", // Starts when next section enters viewport
-                    end: "top 30%",   // Ends later (longer duration)
+                    end: "top 80%",   // Ends very soon (immediate transition)
                     scrub: 1, // Smooth scrub
                     onUpdate: (self) => {
                         // We want:

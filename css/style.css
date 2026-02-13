@@ -304,10 +304,10 @@ body {
     /* Ensure content is reachable */
     padding: 10vh 0;
     /* Spacing within section */
-    margin-bottom: 30vh;
+    margin-bottom: 10vh;
     /* Added spacing between companies */
-    min-height: 250vh;
-    /* Increased height for longer scroll */
+    min-height: 100vh;
+    /* Reduced height for faster scroll (was 250vh) */
     display: flex;
     align-items: center;
 }
@@ -635,6 +635,8 @@ body {
     color: #fff;
     transition: all 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    flex-shrink: 0;
+    /* Prevent oval shape */
 }
 
 .company .content:hover h3::after {
@@ -655,29 +657,57 @@ body {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 
-/* Right Alignment Specifics */
+/* Visit Link Button Style */
+.visit-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.visit-link:hover {
+    background: #fff;
+    color: var(--pricol-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Right Alignment Specifics - NOW LEFT ALIGNED PER REQUEST */
 .company.right .content {
-    text-align: right;
-    align-items: flex-end;
+    /* text-align: right; -- REMOVED */
+    /* align-items: flex-end; -- REMOVED */
+    text-align: left;
+    align-items: flex-start;
 }
 
 .company.right .content h3 {
-    flex-direction: row-reverse;
+    /* flex-direction: row-reverse; -- REMOVED */
+    flex-direction: row;
 }
 
 /* Arrow on Left of text? Or keep standard? Let's flip for symmetry */
 .company.right .content h3::after {
-    transform: rotate(180deg);
+    /* transform: rotate(180deg); -- REMOVED */
+    transform: rotate(0deg);
 }
 
 .company.right .content:hover h3::after {
-    transform: rotate(225deg);
+    /* transform: rotate(225deg); -- REMOVED */
+    transform: rotate(-45deg);
 }
 
 /* -135deg visually */
 
 .company.right .content p {
-    margin-left: auto;
+    margin-left: 0;
+    /* Reset */
 }
 
 /* Push text to right edge */
